@@ -8,37 +8,47 @@
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
     <style>
-        body { margin: 0; font-family: Arial, sans-serif; background-color: #e5e5e5; }
-        
-        /* Visor de pantalla completa */
+        /* Forzamos que el cuerpo ocupe toda la pantalla sin scroll */
+        :root, body { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden;
+            background-color: #222; 
+        }
+
+        /* El visor DEBE ser absoluto para cubrir toda la pantalla */
         model-viewer {
             width: 100vw;
             height: 100vh;
-            --poster-color: transparent;
+            display: block;
         }
 
-        /* Botón de AR mejorado para que sea imposible no verlo */
+        /* Botón estilo "Call to Action" grande en la parte inferior */
         .ar-button {
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 50px;
-            padding: 18px 36px;
+            border-radius: 12px;
+            padding: 20px 40px;
             position: absolute;
-            bottom: 40px;
+            bottom: 50px; /* Separación del borde inferior */
             left: 50%;
             transform: translateX(-50%);
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             cursor: pointer;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            z-index: 9999; /* Asegura que esté por encima de todo */
+            white-space: nowrap;
         }
 
-        .ar-button:active { background-color: #0056b3; }
+        /* Estilo para cuando el botón es presionado */
+        .ar-button:active {
+            background-color: #0056b3;
+            transform: translateX(-50%) scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -50,20 +60,18 @@
         ar-placement="floor"
         ar-scale="fixed"
         camera-controls 
-        touch-action="pan-y"
-        shadow-intensity="1.5" 
-        shadow-softness="1"
-        environment-image="neutral" 
-        auto-rotate
-        camera-target="0m 1.05m 0m"
-        alt="Modelo 3D Rack Grande">
+        shadow-intensity="2" 
+        environment-image="neutral"
+        exposure="1"
+        camera-target="0m 1m 0m"
+        alt="Rack 1:1">
         
         <button slot="ar-button" class="ar-button">
-            <span>📦</span> VER EN TU ESPACIO REAL
+            📦 VER EN TU PISO (REALIDAD VIRTUAL)
         </button>
 
-        <div slot="poster" style="display:flex; justify-content:center; align-items:center; height:100%;">
-            <p>Cargando Rack de 2.13m...</p>
+        <div slot="poster" style="color: white; text-align: center; margin-top: 45vh;">
+            Cargando modelo 3D...
         </div>
 
     </model-viewer>
